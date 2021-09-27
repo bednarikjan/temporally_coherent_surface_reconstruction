@@ -1,0 +1,98 @@
+### Training settings for the ANIM dataset.
+
+# Training run.
+path_train_run: ''  # <-- Fill in an absolute path to a directory, where the training data will be saved.
+name_base: ''
+
+### Data
+ds: 'anim'
+ds_type: ''
+sequences: ['cat_walk']
+
+ds_mode: 'neighbors'  # 'random', 'within_seq', 'neighbors'
+ds_mode_params:
+  max_frames: 1
+resample_pts: True
+center: False
+align_rotation: False
+ds_pairing_mode: 'standard'  # 'standard', 'single_sample', 'consecutive', 'fixed_sample'
+ds_pairing_mode_params:
+  sample_idx: 0
+
+# Dataset sampling.
+ds_sampling: 'grow'  # 'standard', 'grow'
+ds_grow_start: 'center'
+ds_grow_window_init: 5
+ds_grow_conf:
+  type: 'linear'
+  it_start: 30000
+  it_end: 150000
+  step: 1
+ds_grow_sampling:
+  type: 'uniform'  # 'random', 'uniform'
+  ignore_hist_before_start: True
+  max_hist_val_mult: 1.2
+
+# Augmentation
+rand_ax_rot: 'single_axis' # None, 'single_axis', '3_ortho_axes'
+rand_ax_up: 'y'
+rand_ax_steps: 12
+rand_ax_mode: 'random'
+rand_transl: 0.2  # None, 0.2
+
+# Synthetic rotation.
+synth_rot: False
+synth_rot_ang_per_frame: 0.
+synth_rot_up: 'y'
+
+# Synth. noise.
+noise: # None, 0.025
+
+### Model
+N: 2500
+M: 2500
+code: 1024
+
+# Encoder.
+enc_batch_norm: False
+
+# Decoder
+num_patches: 10
+dec_batch_norm: False
+
+### Losses
+loss_mc: True
+alpha_mc: 0.1
+loss_ssc: True
+alpha_ssc: 0.1
+loss_ssc_mode: 'project'
+loss_ssc_cd: 'orig'
+loss_ssc_mc: 'orig'
+loss_scaled_isometry: False
+alpha_scaled_isometry: 0.001  # 0.001, 0.
+alphas_sciso:
+  E: 1.
+  G: 1.
+  skew: 1.
+  stretch: 0.
+  total_area: 100
+  total_area_mult: 1.
+
+### Training
+bs: 4
+lr: 0.001
+valid_period: 2000
+max_train_iters: 200000
+checkpoint_iters: [25000, 50000, 75000, 100000, 125000, 150000, 175000]
+
+# Lr scheduler
+lr_scheduler_fixed: True
+lr_sched_iters: [160000, 180000]
+lr_sched_fracs: 0.1
+
+# Savers
+print_period: 50
+save_num_collapsed_patches_period: 50
+num_vis: 4
+train_state_save_period: 2000
+pcloud_save_period: 2000
