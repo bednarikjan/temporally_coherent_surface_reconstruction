@@ -5,7 +5,7 @@ from scipy.spatial.transform import Rotation
 import h5py
 
 # Project files.
-import jblib.file_sys as jbfs
+import externals.jblib.file_sys as jbfs
 from tcsr.data.points_tensor_dataset import PointsTensorDataset, \
     PointsTensorMultiDataset
 from tcsr.train.helpers import Device
@@ -1024,10 +1024,8 @@ class DatasetINRIAPairs(DatasetPairsBase):
             path_areas=DatasetINRIAPairs.path_areas,
             path_faces=DatasetINRIAPairs.path_faces, **kwargs)
 
-    # TODO
     def _load_faces(self, path):
-        print('[ERROR]: Faces not yet implemented for INRIA, '
-              'will not be loaded.')
+        print('[ERROR]: Faces not implemented for INRIA, will not be loaded.')
         return None
 
 
@@ -1079,3 +1077,10 @@ class DataLoaderDevicePairs(Device):
             for k, v in it.items():
                 bc[k].append(v)
         return {k: torch.cat(v, dim=0) for k, v in bc.items()}
+
+
+DatasetClasses = {
+    'dfaust': DatasetDFAUSTPairs, 'ama': DatasetAMAPairs,
+    'anim': DatasetAnimalsPairs, 'cape': DatasetCAPEPairs,
+    'inria': DatasetINRIAPairs, 'cmu': DatasetCMUPairs
+}
