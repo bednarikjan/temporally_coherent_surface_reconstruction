@@ -1,9 +1,15 @@
 # Temporally-Coherent Surface Reconstruction via Metric-Consistent Atlases [[Paper]](https://arxiv.org/abs/2104.06950) [[Video]](https://youtu.be/P4imXONmtto)
 
-The implementation of the ICCV'21 paper [**Temporally-Coherent Surface 
-Reconstruction via Metric-Consistent Atlases**](https://arxiv.org/abs/2104.06950) and its extension 
-**Temporally-Consistent Surface Reconstruction using Metrically-Consistent 
-Atlases** (currently under TPAMI review).
+The implementation of the papers 
+- [**Temporally-Coherent Surface Reconstruction via Metric-Consistent Atlases**](https://arxiv.org/abs/2104.06950) (ICCV'21) 
+
+  Jan Bednarik, Vladimir G. Kim, Siddhartha Chaudhuri, Shaifali Parashar, Mathieu Salzmann, Pascal Fua, Noam Aigerman
+
+
+- **Temporally-Consistent Surface Reconstruction using Metrically-Consistent 
+Atlases** (under TPAMI review)
+
+  Jan Bednarik, Noam Aigerman, Vladimir G. Kim, Siddhartha Chaudhuri, Shaifali Parashar, Mathieu Salzmann, Pascal Fua
 
 <div float="left">
     <img src="doc/img/teaser/cat_walk.gif" width="400" style="margin: 0; padding: 0" />
