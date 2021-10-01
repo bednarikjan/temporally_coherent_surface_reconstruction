@@ -1,7 +1,7 @@
-# Temporally-Coherent Surface Reconstruction via Metric-Consistent Atlases
+# Temporally-Coherent Surface Reconstruction via Metric-Consistent Atlases [[Paper]](https://arxiv.org/abs/2104.06950) [[Video]](https://youtu.be/P4imXONmtto)
 
-The implementation of the ICCV'21 paper **Temporally-Coherent Surface 
-Reconstruction via Metric-Consistent Atlases** and its extension 
+The implementation of the ICCV'21 paper [**Temporally-Coherent Surface 
+Reconstruction via Metric-Consistent Atlases**](https://arxiv.org/abs/2104.06950) and its extension 
 **Temporally-Consistent Surface Reconstruction using Metrically-Consistent 
 Atlases** (currently under TPAMI review).
 
