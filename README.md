@@ -140,8 +140,16 @@ tensorboard --logdir=. --port=8008 --bind_all
 You can view the reconstructed surfaces as a patch-wise textured mesh as a 
 video within a GIF file. For this purpose, use the IPython Notebook file 
 `tcsr/visualize/render_uv.ipynb` and open it in `jupyterlab` which allows for
-viewing the GIF right after running the code. Before running the cells, set 
-the variables in the second cell (paths, models, data).
+viewing the GIF right after running the code. 
+
+The rendering parameters (such as the camera location, texturing mode, 
+gif speed etc.) are set usin the configuration file 
+`tcsr/visualize/conf_patches.yaml`. There are sample configurations for the 
+sequence `cat_walk`, which can be used to write configurations for other
+sequences/datasets.
+
+Before running the cells, set the variables in the second cell (paths, models, 
+data).
 
 ## Citation
 
