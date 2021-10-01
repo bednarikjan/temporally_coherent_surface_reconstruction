@@ -1,5 +1,14 @@
 # Temporally-Coherent Surface Reconstruction via Metric-Consistent Atlases [[Paper]](https://arxiv.org/abs/2104.06950) [[Video]](https://youtu.be/P4imXONmtto)
 
+<div float="left">
+    <img src="doc/img/teaser/cat_walk.gif" width="400" style="margin: 0; padding: 0" />
+    <img src="doc/img/teaser/handstand.gif" width="400" style="margin: 0; padding: 0" />
+</div>
+<div float="left">
+    <img src="doc/img/teaser/horse_gallop.gif" width="400" style="margin: 0; padding: 0" />
+    <img src="doc/img/teaser/camel_collapse.gif" width="400" style="margin: 0; padding: 0" />
+</div>
+
 The implementation of the papers 
 - [**Temporally-Coherent Surface Reconstruction via Metric-Consistent Atlases**](https://arxiv.org/abs/2104.06950) (ICCV'21) 
 
@@ -10,15 +19,6 @@ The implementation of the papers
 Atlases** (under TPAMI review)
 
   Jan Bednarik, Noam Aigerman, Vladimir G. Kim, Siddhartha Chaudhuri, Shaifali Parashar, Mathieu Salzmann, Pascal Fua
-
-<div float="left">
-    <img src="doc/img/teaser/cat_walk.gif" width="400" style="margin: 0; padding: 0" />
-    <img src="doc/img/teaser/handstand.gif" width="400" style="margin: 0; padding: 0" />
-</div>
-<div float="left">
-    <img src="doc/img/teaser/horse_gallop.gif" width="400" style="margin: 0; padding: 0" />
-    <img src="doc/img/teaser/camel_collapse.gif" width="400" style="margin: 0; padding: 0" />
-</div>
 
 ## Install
 The framework was tested with Python 3.8, PyTorch 1.7.0. and CUDA 11.0. The 
@@ -169,7 +169,7 @@ data).
 ```
 
 ## Acknowledgements
-This work was done while the main author was an intern at Adobe Research.
+This work was partially done while the main author was an intern at Adobe Research.
 
 ## TODO
 - [ ] Add support for visualizing the correspondence error heatmap on the GT mesh.
