@@ -10,9 +10,9 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 
 # Project files.
-import jblib.vis3d as jbv3
-import jblib.helpers as helpers
-import jblib.file_sys as jbfs
+import externals.jblib.vis3d as jbv3
+import externals.jblib.helpers as helpers
+import externals.jblib.file_sys as jbfs
 from tcsr.models.models_mc import ModelMetricConsistency
 
 
@@ -419,3 +419,49 @@ def closest_point(X, Y, distm=None):
     assert inds_X2Y.shape == (B, N) and inds_Y2X.shape == (B, M)
 
     return inds_X2Y, inds_Y2X
+
+
+def regular_spacing(
+        num_pts, rng, iters, decay, dev=torch.device('cpu'), verbose=False):
+    # Generate inital random pts.
+    x_init = torch.empty(
+        (num_pts, 2), dtype=torch.float32, device=dev).uniform_(*rng)
+
+    # Helper vars.
+    dist_inf = (rng[1] - rng[0]) * 100.
+    eye_inf = torch.eye(
+        num_pts, dtype=torch.float32, device=dev) * dist_inf
+
+    # Get max initial step.
+    step_max = 0.25 * (1. / math.sqrt(num_pts))
+
+    # Process all iters.
+    x = x_init.detach().clone()
+    for i in range(iters):
+        if verbose:
+            print(f"\rProcessing iter {i + 1}/{iters}", end='')
+
+        # Get nn distance for all pts.
+        dm = ((x[None] - x[:, None]) ** 2.).sum(dim=2)
+        dists_min = torch.min(dm + eye_inf, dim=1)[0]
+
+        # Generate random step directions.
+        angs = torch.empty(
+            (num_pts,), dtype=torch.float32, device=dev). \
+            uniform_(0., 2. * math.pi)
+        dirs = torch.stack(
+            [torch.cos(angs), torch.sin(angs)], dim=1) * step_max
+
+        # Get candidate new positions of points and nn dist.
+        x_cand = torch.clip(x + dirs, *rng)
+        dm_cand = ((x_cand[None] - x_cand[:, None]) ** 2.).sum(dim=2)
+        dists_min_cand = torch.min(dm_cand + eye_inf, dim=1)[0]
+
+        # Move the points which increase the nn distance.
+        msk = dists_min_cand > dists_min
+        x[msk] = x_cand[msk]
+
+        # Decay the step.
+        step_max *= decay
+
+    return x

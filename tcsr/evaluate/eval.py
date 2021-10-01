@@ -32,97 +32,26 @@
 import math
 import gc
 import ctypes
-libc = ctypes.CDLL("libc.so.6")
+libc = ctypes.CDLL("libc.so.6")  # Used to clear the GPU memory.
 
 # Project files.
-import jblib.helpers as helpers
-import jblib.deep_learning.torch_helpers as dlt_helpers
-import tcsr.eval.metrics as metrics
+import externals.jblib.helpers as helpers
+import externals.jblib.deep_learning.torch_helpers as dlt_helpers
+import tcsr.evaluate.metrics as metrics
 import tcsr.train.helpers as tr_helpers
-from tcsr.data.data_loader import DatasetDFAUSTPairs, DatasetAMAPairs, \
-    DatasetAnimalsPairs, DatasetINRIAPairs, DatasetCAPEPairs
+from tcsr.data.data_loader import DatasetClasses
 
 # 3rd party
 import torch
 import numpy as np
-from metcon.ChamferDistancePytorch.chamfer3D.dist_chamfer_3D import \
+from externals.ChamferDistancePytorch.chamfer3D.dist_chamfer_3D import \
     chamfer_3DDist
 
 
-################################################################################
-# Helpers.
-def distmat(x):
-    assert x.ndim == 2
-    return ((x[None] - x[:, None]) ** 2.).sum(dim=2)
-
-
-def regular_spacing(
-        num_pts, rng, iters, decay, dev=torch.device('cpu'), verbose=False):
-    # Generate inital random pts.
-    x_init = torch.empty(
-        (num_pts, 2), dtype=torch.float32, device=dev).uniform_(*rng)
-
-    # Helper vars.
-    dist_inf = (rng[1] - rng[0]) * 100.
-    eye_inf = torch.eye(
-        num_pts, dtype=torch.float32, device=dev) * dist_inf
-
-    # Get max initial step.
-    step_max = 0.25 * (1. / math.sqrt(num_pts))
-
-    # Process all iters.
-    x = x_init.detach().clone()
-    for i in range(iters):
-        if verbose:
-            print(f"\rProcessing iter {i + 1}/{iters}", end='')
-
-        # Get nn distance for all pts.
-        dm = distmat(x)
-        dists_min = torch.min(dm + eye_inf, dim=1)[0]
-
-        # Generate random step directions.
-        angs = torch.empty(
-            (num_pts,), dtype=torch.float32, device=dev). \
-            uniform_(0., 2. * math.pi)
-        dirs = torch.stack(
-            [torch.cos(angs), torch.sin(angs)], dim=1) * step_max
-
-        # Get candidate new positions of points and nn dist.
-        x_cand = torch.clip(x + dirs, *rng)
-        dm_cand = distmat(x_cand)
-        dists_min_cand = torch.min(dm_cand + eye_inf, dim=1)[0]
-
-        # Move the points which increase the nn distance.
-        msk = dists_min_cand > dists_min
-        x[msk] = x_cand[msk]
-
-        # Decay the step.
-        step_max *= decay
-
-    return x
-
-
-################################################################################
-# Main functions.
-
-def eval_trrun(dataset, path_trrun, n_iters, n_pts, dataset_kwargs=None,
+def eval_trrun(dataset, path_trrun, n_iters, n_pts, subjects=[],
                pck_rng=(0., 0.1), pck_steps=100, dev=torch.device('cuda'),
-               uv_pts_mode='uniform_floor', verbose=True, print_results=True,
-               **kwargs):
+               uv_pts_mode='uniform_floor', verbose=True, print_results=True):
     """
-
-    Args:
-        path_trrun:
-        n_iters:
-        n_pts:
-        pck_rng:
-        pck_steps:
-        dev:
-        ceil_pts:
-        verbose:
-
-    Returns:
-
     """
     assert isinstance(pck_rng, (list, tuple)) and len(pck_rng) == 2
     assert pck_rng[1] > pck_rng[0]
@@ -138,16 +67,8 @@ def eval_trrun(dataset, path_trrun, n_iters, n_pts, dataset_kwargs=None,
     P_orig = conf['num_patches']
 
     # Load data.
-    subjects = kwargs['subjects'] if len(kwargs.get('subjects', [])) > 0 \
-        else conf.get('subjects', None)
-
-    dsClass = {
-        'dfaust': DatasetDFAUSTPairs, 'ama': DatasetAMAPairs,
-        'anim': DatasetAnimalsPairs, 'cape': DatasetCAPEPairs,
-        'inria': DatasetINRIAPairs
-    }[dataset]
-
-    ds = dsClass(
+    subjects = subjects if len(subjects) > 0 else conf.get('subjects', None)
+    ds = DatasetClasses[dataset](
         num_pts=conf['N'], subjects=subjects, sequences=conf['sequences'],
         mode='within_seq', center=conf['center'],
         align_rot=conf['align_rotation'], resample_pts=True, with_reg=True,
@@ -156,43 +77,8 @@ def eval_trrun(dataset, path_trrun, n_iters, n_pts, dataset_kwargs=None,
         synth_rot_up=conf['synth_rot_up'], noise=conf['noise'],
         ds_type=conf.get('ds_type', 'clean'))
 
-    # if dataset == 'dfaust':
-    #     dst = 'clean' if dataset_kwargs is None else dataset_kwargs['type']
-    #     subjects = conf['subjects']
-    #     if len(kwargs.get('subjects', [])) > 0:
-    #         subjects = kwargs['subjects']
-    #     ds = DatasetDFAUSTPairs(
-    #         ds_type=dst, num_pts=conf['N'], subjects=subjects,
-    #         sequences=conf['sequences'], mode='within_seq', resample_pts=True,
-    #         wrong_impl=conf.get('wrong_impl', False), with_reg=True)
-    # elif dataset == 'ama':
-    #     ds = DatasetAMAPairs(
-    #         num_pts=conf['N'], sequences=conf['sequences'], mode='within_seq',
-    #         center=conf['center'], align_rot=conf['align_rotation'],
-    #         resample_pts=True, with_reg=True, noise=conf.get('noise', None))
-    # elif dataset == 'animals':
-    #     ds = DatasetAnimalsPairs(
-    #         num_pts=conf['N'], sequences=conf['sequences'], mode='within_seq',
-    #         resample_pts=True, with_reg=True)
-    # elif dataset == 'inria':
-    #     subjects = conf['subjects']
-    #     if len(kwargs.get('subjects', [])) > 0:
-    #         subjects = kwargs['subjects']
-    #     ds = DatasetINRIAPairs(
-    #         num_pts=conf['N'], subjects=subjects, sequences=conf['sequences'],
-    #         mode='within_seq', center=conf['center'], resample_pts=True,
-    #         with_reg=True)
-    # elif dataset == 'cape':
-    #     subjects = conf['subjects']
-    #     if len(kwargs.get('subjects', [])) > 0:
-    #         subjects = kwargs['subjects']
-    #     ds = DatasetCAPEPairs(
-    #         conf['ds_type'], num_pts=conf['N'], subjects=subjects,
-    #         sequences=conf['sequences'], mode='within_seq', resample_pts=True,
-    #         with_reg=True, center=conf.get('center', False))
-
     # Load model.
-    model = tr_helpers.create_model_train(conf, num_cws=len(ds))
+    model = tr_helpers.create_model_train(conf)
     model.load_state_dict(torch.load(path_trstate)['weights'])
     _ = model.eval()
 
@@ -245,7 +131,7 @@ def eval_trrun(dataset, path_trrun, n_iters, n_pts, dataset_kwargs=None,
             if m in reg_pts_2d:
                 uv = reg_pts_2d[m]
             else:
-                uv = np.tile(regular_spacing(
+                uv = np.tile(tr_helpers.regular_spacing(
                     m, (0., 1.), 250, 0.994, dev=dev, verbose=verbose).
                              cpu().numpy(), (P_orig, 1))
                 reg_pts_2d[m] = np.copy(uv)
@@ -298,7 +184,7 @@ def eval_trrun(dataset, path_trrun, n_iters, n_pts, dataset_kwargs=None,
                 if m_curr in reg_pts_2d:
                     uv = reg_pts_2d[m_curr]
                 else:
-                    uv = regular_spacing(
+                    uv = tr_helpers.regular_spacing(
                         m_curr, (0., 1.), 250, 0.994, dev=dev, verbose=True).\
                         cpu().numpy()
                     reg_pts_2d[m_curr] = np.copy(uv)
@@ -362,7 +248,5 @@ def eval_trrun(dataset, path_trrun, n_iters, n_pts, dataset_kwargs=None,
               f"{res['auc_mu'] * 100.:.2f}+-{res['auc_std'] * 100.:.2f},"
               f"{res['cd_mu'] * 1000.:.3f}+-{res['cd_std'] * 1000.:.3f}")
 
-    if kwargs.get('debug', False):
-        return res, msl2_all, mrankn_all
-    else:
-        return res
+
+    return res

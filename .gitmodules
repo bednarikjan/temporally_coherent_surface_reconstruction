@@ -1,0 +1,6 @@
+[submodule "externals/ChamferDistancePytorch"]
+	path = externals/ChamferDistancePytorch
+	url = https://github.com/ThibaultGROUEIX/ChamferDistancePytorch.git
+[submodule "externals/jblib"]
+	path = externals/jblib
+	url = https://github.com/bednarikjan/jblib.git

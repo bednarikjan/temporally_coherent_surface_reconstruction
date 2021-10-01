@@ -4,8 +4,8 @@ import subprocess
 import shutil
 
 # Project files.
-import jblib.file_sys as jbfs
-import metcon.pcloud_utils as pc_utils
+import externals.jblib.file_sys as jbfs
+import tcsr.train.helpers as tr_helpers
 
 # 3rd party
 import torch
@@ -124,10 +124,10 @@ class NonrigidICP:
 
                 # Get predicted correspondences.
                 if self._projection == 'many2one':
-                    i_def2tgt = pc_utils.closest_point(
+                    i_def2tgt = tr_helpers.closest_point(
                         pts_def[None], pts_tgt[None])[0][0].numpy()  # (N, )
                 elif self._projection == 'hungarian':
-                    cm = pc_utils.distance_matrix_squared(
+                    cm = tr_helpers.distance_matrix_squared(
                         pts_def[None], pts_tgt[None])[0]  # (N, N)
                     i_def2tgt = linear_sum_assignment(cm.cpu().numpy())[1] #(N,)
                 else:

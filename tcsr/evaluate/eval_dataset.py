@@ -25,34 +25,13 @@ import argparse
 from collections import defaultdict
 
 # Project files.
-import jblib.file_sys as jbfs
-import metcon.helpers as helpers
-from metcon.eval.dense_correspondences.eval import eval_trrun
+import externals.jblib.file_sys as jbfs
+from tcsr.evaluate.eval import eval_trrun
+from tcsr.data.data_loader import DatasetClasses
 
 # 3rd party
 import yaml
 
-
-sequences_dfaust = [
-    'chicken_wings', 'hips', 'jiggle_on_toes', 'jumping_jacks', 'knees',
-    'light_hopping_loose', 'light_hopping_stiff', 'one_leg_jump',
-    'one_leg_loose', 'punching', 'running_on_spot', 'shake_arms', 'shake_hips',
-    'shake_shoulders']
-sequences_ama = [
-    'bouncing', 'crane', 'handstand', 'jumping', 'march_1', 'march_2', 'samba',
-    'squat_1', 'squat_2', 'swing']
-sequences_animals = [
-    'cat_walk', 'horse_gallop', 'horse_collapse', 'camel_gallop',
-    'camel_collapse', 'elephant_gallop']
-sequences_inria = [
-    'layered_knee', 'layered_spin', 'layered_walk', 'tight_walk', 'wide_knee',
-    'wide_spin', 'wide_walk'
-]
-sequences_cape = [
-    'shortlong_hips', 'shortlong_pose_model', 'shortlong_shoulders_mill',
-    'shortlong_tilt_twist_left', 'shortshort_hips', 'shortshort_pose_model',
-    'shortshort_shoulders_mill', 'shortshort_tilt_twist_left'
-]
 
 # Arguments
 argparser = argparse.ArgumentParser()
@@ -102,9 +81,8 @@ args = argparser.parse_args()
 kwargs = {'subjects': args.subjects}
 
 # Get the sequences to use.
-all_seqs = {'dfaust': sequences_dfaust, 'ama': sequences_ama,
-            'anim': sequences_animals, 'inria': sequences_inria,
-            'cape': sequences_cape}[args.ds]
+all_seqs = DatasetClasses[args.ds].sequences_all
+
 sequences = args.include_seqs
 sequences = [s for s in all_seqs if s not in args.exclude_seqs] \
     if len(sequences) == 0 else sequences
@@ -159,9 +137,9 @@ for seqi, seq in enumerate(sequences):
         res_all[seq][trrun] = res
 
         # Store results.
-        path_res_dir = helpers.jn(path_trrun, 'res/dense_corresp')
-        path_res_file = helpers.jn(path_res_dir, name_out + '.yaml')
-        helpers.make_dir(path_res_dir)
+        path_res_dir = jbfs.jn(path_trrun, 'res/dense_corresp')
+        path_res_file = jbfs.jn(path_res_dir, name_out + '.yaml')
+        jbfs.make_dir(path_res_dir)
         with open(path_res_file, 'w') as f:
             res['pck_rng'] = [args.pck_min, args.pck_max]
             res['uv_pts_mode'] = args.uv_pts_mode

@@ -1,0 +1,111 @@
+################################################################################
+# default
+default:
+  gif:
+    fps: 20
+    subsample: 1
+  data:
+    center: False
+    align_rot: False
+    offset: [0., 0., 0.]
+  camera:
+    type: 'perspective'
+    dist: 2.
+    azi: 0.
+    ele: 0.
+  camera_anim:
+  light:
+    colors:
+      ambient: [ 1.0, 1.0, 1.0 ]
+      diffuse: [ 0.0, 0.0, 0.0 ]
+      specular: [ 0.0, 0.0, 0.0 ]
+    location: [[2., 1., 1.]]
+  texture:
+    style: 'multi_patch'
+    style_args:
+      camera_plane:
+        ref_idx: 0
+
+################################################################################
+# ANIMALS
+anim:
+  all:
+    default:
+      data:
+        offset: [0., 0., 0.1]
+      camera:
+        dist: 1.1
+        azi: 90.
+      light:
+        location: [ [ 1., 1., -1. ] ]
+      gif:
+        fps: 20
+        subsample: 1
+
+    rot:
+      data:
+        offset: [ 0., 0., 0.1 ]
+        center: False
+        align_rot: True
+      camera:
+        dist: 1.1
+        azi: 90.
+      light:
+        location: [ [ 1., 1., -1. ] ]
+      gif:
+        fps: 20
+        subsample: 1
+
+  sequence_specific:
+    cat_walk:
+      default:
+        light:
+          colors:
+            ambient: [ 0.6, 0.6, 0.6 ]
+            diffuse: [ 0.0, 0.0, 0.0 ]
+            specular: [ 0.0, 0.0, 0.0 ]
+          location: [ [ 1., 1., 1. ] ]
+      rotating:
+        data:
+          offset: [ 0., 0., 0. ]
+        light:
+          colors:
+            ambient: [ 0.6, 0.6, 0.6 ]
+            diffuse: [ 0.0, 0.0, 0.0 ]
+            specular: [ 0.0, 0.0, 0.0 ]
+          location: [ [ 1., 1., 1. ] ]
+      other_side:
+        camera:
+          azi: -90.
+        light:
+          colors:
+            ambient: [ 0.7, 0.7, 0.7 ]
+            diffuse: [ 0.3, 0.3, 0.3 ]
+            specular: [ 0.0, 0.0, 0.0 ]
+          location: [ [ -1., 1., 1. ] ]
+      default_uv_camplane:
+        texture:
+          style: 'camera_plane'
+          style_args:
+            camera_plane:
+              ref_idx: 0
+        light:
+          colors:
+            ambient: [ 0.8, 0.8, 0.8 ]
+            diffuse: [ 0.2, 0.2, 0.2 ]
+            specular: [ 0.0, 0.0, 0.0 ]
+          location: [ [ 1., 1., 1. ] ]
+      other_side_uv_camplane:
+        texture:
+          style: 'camera_plane'
+          style_args:
+            camera_plane:
+              ref_idx: 0
+        light:
+          colors:
+            ambient: [ 0.9, 0.9, 0.9 ]
+            diffuse: [ 0.1, 0.1, 0.1 ]
+            specular: [ 0.0, 0.0, 0.0 ]
+          location: [ [ -1., 1., 1. ] ]
+        camera:
+          azi: -90

@@ -5,13 +5,11 @@ import argparse
 from timeit import default_timer as timer
 
 # project files
-import jblib.file_sys as jbfs
-import jblib.helpers as helpers
-import jblib.deep_learning.torch_helpers as dlt_helpers
+import externals.jblib.file_sys as jbfs
+import externals.jblib.helpers as helpers
+import externals.jblib.deep_learning.torch_helpers as dlt_helpers
 import tcsr.train.helpers as tr_helpers
-from tcsr.data.data_loader import DatasetDFAUSTPairs, DatasetAMAPairs, \
-    DatasetAnimalsPairs, DatasetCAPEPairs, DatasetINRIAPairs, \
-    DatasetCMUPairs, DataLoaderDevicePairs
+from tcsr.data.data_loader import DatasetClasses, DataLoaderDevicePairs
 from tcsr.data.sampler_gradual_growth import BatchSamplerGradualGrow
 
 # 3rd party
@@ -43,13 +41,7 @@ else:
 writer_tr = SummaryWriter(jbfs.jn(path_trrun, 'tr'))
 
 # Get data
-dsClass = {
-    'dfaust': DatasetDFAUSTPairs, 'ama': DatasetAMAPairs,
-    'anim': DatasetAnimalsPairs, 'cape': DatasetCAPEPairs,
-    'inria': DatasetINRIAPairs, 'cmu': DatasetCMUPairs
-}[conf['ds']]
-
-ds = dsClass(
+ds = DatasetClasses[conf['ds']](
     num_pts=conf['N'], subjects=conf.get('subjects', None),
     sequences=conf['sequences'], mode=conf['ds_mode'],
     mode_params=conf['ds_mode_params'], center=conf['center'],

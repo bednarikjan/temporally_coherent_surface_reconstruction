@@ -9,7 +9,7 @@ from tcsr.models.sampler import FNSamplerRandUniform
 from tcsr.models.decoder import DecoderMultiPatch, DecoderAtlasNet
 from tcsr.models.diff_props import DiffGeomProps
 from tcsr.train.helpers import Device
-import jblib.mesh as jbm
+import externals.jblib.mesh as jbm
 
 
 class ModelMetricConsistency(nn.Module, Device):
