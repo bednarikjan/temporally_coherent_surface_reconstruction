@@ -5,7 +5,7 @@ Reconstruction via Metric-Consistent Atlases** and its extension
 **Temporally-Consistent Surface Reconstruction using Metrically-Consistent 
 Atlases** (currently under TPAMI review).
 
-<div float="left" style="padding:0px;">
+<div float="left" style="padding: 0px; margin: 0px;">
   <img src="doc/img/teaser/cat_walk_pcloud.gif" width="200" border="0" style="display: block;" />
   <img src="doc/img/teaser/cat_walk_uv.gif" width="200" border="0" style="display: block;" />
 </div>
