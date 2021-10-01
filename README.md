@@ -6,7 +6,8 @@ Reconstruction via Metric-Consistent Atlases** and its extension
 Atlases** (currently under TPAMI review).
 
 <div float="left">
-  <img src="doc/img/teaser/cat_walk.gif" width="500" style="margin: 0; padding: 0" />
+    <img src="doc/img/teaser/cat_walk.gif" width="500" style="margin: 0; padding: 0" />
+    <img src="doc/img/teaser/handstand.gif" width="500" style="margin: 0; padding: 0" />
 </div>
 
 ## Install
