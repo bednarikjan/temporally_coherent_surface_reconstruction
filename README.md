@@ -7,6 +7,7 @@ Atlases** (currently under TPAMI review).
 
 <p float="left">
   <img src="doc/img/teaser/cat_walk_pcloud.gif" width="200" />
+  <img src="doc/img/teaser/cat_walk_uv.gif" width="200" />
 </p>
 <p float="left">
   <img src="doc/img/teaser/cat_walk_uv.gif" width="200" />
