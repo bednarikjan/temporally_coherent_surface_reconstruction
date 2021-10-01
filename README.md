@@ -15,6 +15,25 @@ Atlases** (currently under TPAMI review).
 </div>
 
 ## Install
+The framework was tested with Python 3.8, PyTorch 1.7.0. and CUDA 11.0. The 
+easiest way to work with the code is to create a new virtual Python environment 
+and install the required packages.
+
+1. Install the [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/).
+2. Create a new environment and install the required packages.
+
+```shell
+mkvirtualenv --python=python3.8 tcsr
+pip install -r requirements.txt
+```
+
+3. Get the code and prepare the environment as follows:
+
+```shell
+git clone git@github.com:bednarikjan/temporally_coherent_surface_reconstruction.git
+git submodule update --init --recursive
+export PYTHONPATH="{PYTHONPATH}:path/to/dir/temporally_coherent_surface_reconstruction"
+```
 
 ## Get the Data
 
