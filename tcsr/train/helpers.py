@@ -172,11 +172,10 @@ def create_model_train(conf):
         dec_batch_norm=conf['dec_batch_norm'],
         loss_scaled_isometry=conf['loss_scaled_isometry'],
         alpha_scaled_isometry=conf['alpha_scaled_isometry'],
-        alphas_sciso=conf['alphas_sciso'], loss_mmcl=conf['loss_mmcl'],
-        loss_mc=conf['loss_mc'], alpha_mc=conf['alpha_mc'],
-        loss_ssc=conf['loss_ssc'], alpha_ssc=conf['alpha_ssc'],
-        loss_ssc_cd=conf['loss_ssc_cd'], loss_ssc_mc=conf['loss_ssc_mc'],
-        gpu=True)
+        alphas_sciso=conf['alphas_sciso'], loss_mc=conf['loss_mc'],
+        alpha_mc=conf['alpha_mc'], loss_ssc=conf['loss_ssc'],
+        alpha_ssc=conf['alpha_ssc'], loss_ssc_cd=conf['loss_ssc_cd'],
+        loss_ssc_mc=conf['loss_ssc_mc'], gpu=True)
 
 
 def prepare_uv(num_pts, num_patches):
@@ -322,12 +321,6 @@ class LRSchedulerFixed:
 
     def load_state_dict(self, d):
         self._step = d['step']
-
-
-def identity(x):
-    """ Implements the identity function.
-    """
-    return x
 
 
 def distance_matrix_squared(X, Y, chunked=None):

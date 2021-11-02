@@ -74,7 +74,7 @@ else:
     raise Exception(f"Unknown dataset sampling mode '{ds_sampling}'")
 
 # Build a model.
-model = tr_helpers.create_model_train(conf, num_cws=len(ds))
+model = tr_helpers.create_model_train(conf)
 model.train()
 
 # Prepare training.
@@ -134,10 +134,9 @@ for it in range(it_start, max_iters + 1):
     pts_gt = batch['pts']
     inds = batch['inds']
     A_gt = batch.get('areas', None)
-    x = {'mmcl_withenc': pts_gt, 'mmcl_noenc': inds}[conf['model']]
 
     # Feedforward.
-    model.forward(x, B)
+    model.forward(pts_gt, B)
     losses = model.loss(
         pts_gt, B, loss_distort=conf['loss_scaled_isometry'], A_gt=A_gt)
 

@@ -261,7 +261,7 @@ class ModelMetricConsistency(nn.Module, Device):
         S = pc_gt.shape[1]
 
         # Get points assignment for the first predicted sample.
-        inds_p2gt = self._reg_func_impl(pc_gt[:, 0], pc_p[:, 0])[0]  # (B, M)
+        inds_p2gt = self._register_pts(pc_gt[:, 0], pc_p[:, 0])[0]  # (B, M)
 
         # Extract corresp. GT pts for the predictions of the augmented samples.
         pcg = pc_gt[:, 1:].gather(2, inds_p2gt[:, None, :, None].expand(
@@ -305,7 +305,7 @@ class ModelMetricConsistency(nn.Module, Device):
                 EFG = self._get_fff()
                 efg = EFG.reshape((3, Bo, S, P, spp)).transpose(1, 2).\
                     reshape((3, S * Bo, P, spp))
-            L_mc = self.loss_mc_no_interp(EFG=efg)
+            L_mc = self._loss_metric_consistency(EFG=efg)
             losses['L_mc_raw'] = L_mc
             losses['L_mc'] = self._alpha_mc * L_mc
             losses['loss_tot'] += losses['L_mc']

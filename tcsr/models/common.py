@@ -1,6 +1,7 @@
 # 3rd party
 import torch
 
+
 class Device:
     """ Creates the computation device.
 
@@ -14,3 +15,9 @@ class Device:
             self.device = torch.device('cpu')
             if gpu:
                 print('[WARNING] cuda not available, using CPU.')
+
+
+def identity(x):
+    """ Implements the identity function.
+    """
+    return x
