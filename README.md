@@ -32,8 +32,17 @@ and install the required packages.
 mkvirtualenv --python=python3.8 tcsr
 pip install -r requirements.txt
 ```
+3. Install Pytorch3d.
 
-3. Get the code and prepare the environment as follows:
+```shell
+cd ~
+curl -LO https://github.com/NVIDIA/cub/archive/1.10.0.tar.gz
+tar xzf 1.10.0.tar.gz
+export CUB_HOME=$PWD/cub-1.10.0
+pip install git+https://github.com/facebookresearch/pytorch3d.git@3c15a6c2469249c8b90a4f3e41e34350b8051b92
+```
+
+4. Get the code and prepare the environment as follows:
 
 ```shell
 git clone git@github.com:bednarikjan/temporally_coherent_surface_reconstruction.git

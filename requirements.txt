@@ -60,7 +60,7 @@ jupyterlab==3.1.6
 jupyterlab-server==2.7.0
 jupyterlab-widgets==1.0.0
 kiwisolver==1.2.0
-kornia==0.4.0
+kornia==0.5.11
 line-profiler==3.0.2
 llvmlite==0.34.0
 Markdown==3.2.2
@@ -107,7 +107,6 @@ pyquaternion==0.9.5
 pyrsistent==0.16.0
 python-dateutil==2.8.1
 pythreejs==2.2.1
-pytorch3d @ git+https://github.com/facebookresearch/pytorch3d.git@3c15a6c2469249c8b90a4f3e41e34350b8051b92
 pytz==2020.1
 PyWavelets==1.1.1
 PyYAML==5.4.1
