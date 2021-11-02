@@ -17,7 +17,7 @@ import torch.autograd as ag
 import torch.nn.functional as F
 
 # Project files.
-from tcsr.train.helpers import Device
+from tcsr.models.common import Device
 
 
 class DiffGeomProps(nn.Module, Device):

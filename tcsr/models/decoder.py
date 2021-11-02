@@ -14,7 +14,8 @@ import torch
 import torch.nn as nn
 
 # Project files.
-from tcsr.train.helpers import Device, identity
+from tcsr.train.helpers import identity
+from tcsr.models.common import Device
 
 
 class DecoderCounter:

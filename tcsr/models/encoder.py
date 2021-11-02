@@ -10,7 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 # Project files.
-from tcsr.train.helpers import Device
+from tcsr.models.common import Device
 
 
 class EncoderPointNet(nn.Module, Device):

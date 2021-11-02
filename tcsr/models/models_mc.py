@@ -8,7 +8,7 @@ from tcsr.models.encoder import EncoderPointNet
 from tcsr.models.sampler import FNSamplerRandUniform
 from tcsr.models.decoder import DecoderMultiPatch, DecoderAtlasNet
 from tcsr.models.diff_props import DiffGeomProps
-from tcsr.train.helpers import Device
+from tcsr.models.common import Device
 import externals.jblib.mesh as jbm
 
 

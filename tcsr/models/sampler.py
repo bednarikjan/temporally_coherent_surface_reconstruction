@@ -11,7 +11,7 @@ import torch.nn as nn
 from abc import ABC, abstractmethod
 
 # Project files
-from tcsr.train.helpers import Device
+from tcsr.models.common import Device
 
 
 class FNSampler(ABC, nn.Module, Device):

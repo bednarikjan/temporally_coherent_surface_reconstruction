@@ -8,7 +8,7 @@ import h5py
 import externals.jblib.file_sys as jbfs
 from tcsr.data.points_tensor_dataset import PointsTensorDataset, \
     PointsTensorMultiDataset
-from tcsr.train.helpers import Device
+from tcsr.models.common import Device
 
 
 class DatasetPairsBase(torch.utils.data.Dataset):

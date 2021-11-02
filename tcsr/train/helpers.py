@@ -16,21 +16,6 @@ import externals.jblib.file_sys as jbfs
 from tcsr.models.models_mc import ModelMetricConsistency
 
 
-class Device:
-    """ Creates the computation device.
-
-    Args:
-        gpu (bool): Whether to use gpu.
-    """
-    def __init__(self, gpu=True):
-        if gpu and torch.cuda.is_available():
-            self.device = torch.device('cuda')
-        else:
-            self.device = torch.device('cpu')
-            if gpu:
-                print('[WARNING] cuda not available, using CPU.')
-
-
 def create_trrun_save_conf(path_conf, key_path_trrun='path_train_run',
                            force_base_dir_perm=False, ds_specific_path=False):
     """ Loads the configuration file (.yaml), creates a new training run output

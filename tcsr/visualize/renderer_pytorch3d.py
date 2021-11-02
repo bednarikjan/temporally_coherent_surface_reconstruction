@@ -15,7 +15,7 @@ from scipy.spatial.transform import Rotation
 import matplotlib.pyplot as plt
 
 # Project files.
-from tcsr.train.helpers import Device
+from tcsr.models.common import Device
 import externals.jblib.mesh as jbm
 import externals.jblib.vis3d as jbv3
 
