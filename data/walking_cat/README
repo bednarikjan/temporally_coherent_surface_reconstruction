@@ -1,0 +1,10 @@
+Content:
+<joints_name.txt>: list of skeleton joints
+<joints-value.txt>: joint Euler angles over time; one frame on each line, each column lists the 3 Euler angles of a given joint over time. Joints follow the order given in <joints_name.txt>
+OBJ/: sequence of meshes in OBJ format
+maps/wcat/: skinning weights projected on a texture; one tiff file per joint, the skinning weight of a vertex can be retrieved by looking at its texture coordinates and then its value in the corresponding tiff file
+
+This walking cat sequence has been created by Christine Depraz, please acknowledge the following paper in case of use:
+Grégoire Aujay, Franck Hétroy, Francis Lazarus, Christine Depraz. Harmonic Skeleton for Realistic Character Animation. ACM-SIGGRAPH/Eurographics Symposium on Computer Animation, Aug 2007, San Diego, United States, pp.151-160.
+https://hal.inria.fr/inria-00151606v2/document
+
