@@ -700,7 +700,7 @@ class DatasetPairsBase(torch.utils.data.Dataset):
                 torch.bmm(synth_rots, rots_applied)  # (B, 3, 3)
 
         # Translation and rotation augmentation.
-        if self._rand_ax_rot is not None or self._rand_transl is not None:
+        if self._rand_ax_rot is not None and self._rand_transl is not None:
             pts, pts_reg = self._augm_rot_transl(pts, pts_reg=pts_reg)
 
         # Form the sample.

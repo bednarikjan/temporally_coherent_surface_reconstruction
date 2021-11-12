@@ -424,7 +424,7 @@ class ModelMetricConsistency(nn.Module, Device):
                 uv_augm, cws[Bo:], spp, patches)  # (B-Bo, M, 3)
 
         # Reshuffle the predicted points back to the original order.
-        self._pc_pred = pcp_orig
+        self.pc_pred = pcp_orig
         if self._loss_ssc:
             self.pc_pred = torch.cat([pcp_orig, pcp_augm], dim=0).\
                 reshape((S, Bo, M, 3)).transpose(0, 1).\
