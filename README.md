@@ -63,7 +63,7 @@ these steps:
 
 ### 1. ANIM
 - [Download](http://people.csail.mit.edu/sumner/research/deftransfer/data.html) the sequences `horse gallop`, `horse collapse`, `camel gallop`, `camel collapse`, and `elephant gallop`.
-- [Request the access](https://hal.inria.fr/inria-00151606v2) to the sequence `walking cat` and download it.
+- [Download](https://github.com/bednarikjan/temporally_coherent_surface_reconstruction) the sequence `walking cat`.
 
 ### 2. AMA
 - [Download](https://people.csail.mit.edu/drdaniel/mesh_animation/) all 10 sequences, meshes only.
