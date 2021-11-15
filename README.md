@@ -1,4 +1,4 @@
-# Temporally-Coherent Surface Reconstruction via Metric-Consistent Atlases [[Paper]](https://arxiv.org/abs/2104.06950) [[Project page]](https://bednarikjan.github.io/projects/temp_cons_surf_rec/) [[Video]](https://youtu.be/P4imXONmtto)
+# Temporally-Coherent Surface Reconstruction via Metric-Consistent Atlases [Papers [1](https://arxiv.org/abs/2104.06950), [2](https://arxiv.org/abs/2111.06838)][[Project page]](https://bednarikjan.github.io/projects/temp_cons_surf_rec/) [[Video]](https://youtu.be/P4imXONmtto)
 
 <div float="left">
     <img src="doc/img/teaser/cat_walk.gif" width="400" style="margin: 0; padding: 0" />
