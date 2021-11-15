@@ -15,8 +15,8 @@ The implementation of the papers
   Jan Bednarik, Vladimir G. Kim, Siddhartha Chaudhuri, Shaifali Parashar, Mathieu Salzmann, Pascal Fua, Noam Aigerman
 
 
-- **Temporally-Consistent Surface Reconstruction using Metrically-Consistent 
-Atlases** (under TPAMI review)
+- [**Temporally-Consistent Surface Reconstruction using Metrically-Consistent 
+Atlases**](https://arxiv.org/abs/2111.06838) (preprint)
 
   Jan Bednarik, Noam Aigerman, Vladimir G. Kim, Siddhartha Chaudhuri, Shaifali Parashar, Mathieu Salzmann, Pascal Fua
 
@@ -173,6 +173,13 @@ data).
     title = {Temporally-Coherent Surface Reconstruction via Metric-Consistent Atlases},
     author = {Bednarik, Jan and Kim, Vladimir G. and Chaudhuri, Siddhartha and Parashar, Shaifali and Salzmann, Mathieu and Fua, Pascal and Aigerman, Noam},
     booktitle = {Proceedings of IEEE International Conference on Computer Vision (ICCV)},
+    year = {2021}
+}
+
+@inproceedings{bednarik2021temporally_consistent,
+    title = {Temporally-Consistent Surface Reconstruction via Metrically-Consistent Atlases},
+    author = {Bednarik, Jan and Aigerman, Noam and Kim, Vladimir G. and Chaudhuri, Siddhartha and Parashar, Shaifali and Salzmann, Mathieu and Fua, Pascal},
+    booktitle = {arXiv},
     year = {2021}
 }
 ```
